@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advocacy Toolkit for Mental Health Professionals</title>
+<meta name="description" content="An open-source advocacy toolkit for mental health professionals, policy leaders, counseling educators, clinical supervisors, and provider advocates.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF7F0;
+    --bg-alt: #F4EDE0;
+    --ink: #1C1C1C;
+    --ink-soft: #3D3D3D;
+    --muted: #6B6B6B;
+    --rule: #D9CFBE;
+    --primary: #8B2635;
+    --primary-dark: #6B1D29;
+    --secondary: #1F3A3D;
+    --accent: #D4A574;
+    --highlight: #F9E8D0;
+    --serif: "Fraunces", Georgia, serif;
+    --sans: "Public Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.65;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Subtle paper texture */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0 0.2 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  .container { position: relative; z-index: 2; }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 80px 8% 60px;
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%);
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: "";
+    width: 32px;
+    height: 2px;
+    background: var(--primary);
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(36px, 5.5vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--secondary);
+    max-width: 900px;
+    font-variation-settings: "opsz" 144;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--primary);
+  }
+
+  .hero-lede {
+    font-family: var(--serif);
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin-top: 28px;
+    max-width: 720px;
+    font-weight: 400;
+    font-variation-settings: "opsz" 14;
+  }
+
+  .hero-meta {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .hero-meta strong {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .hero-meta span { color: var(--ink-soft); font-size: 15px; }
+
+  /* ============ LAYOUT ============ */
+  .main-wrapper {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 8%;
+    gap: 64px;
+  }
+
+  /* ============ SIDEBAR NAV ============ */
+  .sidebar {
+    position: sticky;
+    top: 40px;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    padding: 60px 0;
+    font-size: 14px;
+  }
+
+  .sidebar-title {
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .sidebar ol {
+    list-style: none;
+    counter-reset: toc;
+  }
+
+  .sidebar ol li {
+    counter-increment: toc;
+    margin-bottom: 2px;
+  }
+
+  .sidebar ol li a {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 8px 0;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.35;
+    transition: color 0.2s, padding 0.2s;
+    border-left: 2px solid transparent;
+    padding-left: 12px;
+    margin-left: -14px;
+  }
+
+  .sidebar ol li a::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--serif);
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    font-feature-settings: "tnum";
+    min-width: 22px;
+  }
+
+  .sidebar ol li a:hover {
+    color: var(--primary);
+    border-left-color: var(--primary);
+  }
+
+  /* ============ CONTENT ============ */
+  .content {
+    padding: 60px 0 120px;
+    max-width: 760px;
+  }
+
+  section {
+    margin-bottom: 80px;
+    scroll-margin-top: 20px;
+  }
+
+  .section-number {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--primary);
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: clamp(30px, 3.5vw, 42px);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--secondary);
+    margin-bottom: 28px;
+    font-variation-settings: "opsz" 144;
+  }
+
+  h3 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 1.25;
+    color: var(--secondary);
+    margin-top: 40px;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+  }
+
+  h4 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-top: 28px;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin-bottom: 18px;
+    color: var(--ink-soft);
+  }
+
+  p strong { color: var(--ink); font-weight: 600; }
+
+  a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: all 0.2s;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  a:hover {
+    color: var(--primary-dark);
+    text-decoration-color: var(--primary);
+    text-decoration-thickness: 2px;
+  }
+
+  ul, ol { margin-bottom: 18px; padding-left: 20px; }
+  li { margin-bottom: 8px; color: var(--ink-soft); }
+
+  /* Tip blocks */
+  .tip {
+    background: var(--bg-alt);
+    border-left: 3px solid var(--primary);
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: 15.5px;
+  }
+
+  .tip-label {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  /* Resource card */
+  .resource {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .resource:last-child { border-bottom: none; }
+
+  .resource-name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--secondary);
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  .resource-desc { font-size: 15.5px; margin-bottom: 8px; }
+
+  .resource a[href^="http"]::after {
+    content: " ↗";
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  /* FAQ */
+  .faq-question {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 19px;
+    color: var(--secondary);
+    margin-top: 28px;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  /* Template blocks */
+  .template {
+    background: #FFFEF9;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--secondary);
+    padding: 28px 32px;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .template::before {
+    content: "TEMPLATE";
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--bg);
+    padding: 0 10px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    color: var(--secondary);
+  }
+
+  .template p { margin-bottom: 12px; }
+
+  .template .placeholder {
+    background: var(--highlight);
+    padding: 1px 5px;
+    border-radius: 2px;
+    font-family: "Courier New", monospace;
+    font-size: 13px;
+    color: var(--primary-dark);
+  }
+
+  /* Fillable cheat sheet */
+  .cheatsheet {
+    background: #FFFEF9;
+    border: 1px solid var(--rule);
+    padding: 32px;
+    margin: 24px 0;
+    border-radius: 2px;
+  }
+
+  .cheatsheet-group {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .cheatsheet-group:last-child { border-bottom: none; }
+
+  .cheatsheet-group h5 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--secondary);
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  .field {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 15px;
+  }
+
+  .field-label { color: var(--muted); min-width: 180px; font-size: 14px; }
+  .field-line { flex: 1; border-bottom: 1px dotted var(--rule); height: 20px; }
+
+  /* Section divider ornament */
+  .ornament {
+    text-align: center;
+    margin: 64px 0;
+    color: var(--accent);
+    font-size: 20px;
+    letter-spacing: 1em;
+    padding-left: 1em;
+  }
+
+  /* Footer */
+  footer {
+    background: var(--secondary);
+    color: var(--bg-alt);
+    padding: 60px 8%;
+    margin-top: 0;
+  }
+
+  footer h3 {
+    font-family: var(--serif);
+    color: var(--bg);
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  footer p { color: var(--bg-alt); font-size: 14.5px; line-height: 1.6; }
+
+  footer a {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+
+  footer a:hover { color: var(--bg); }
+
+  .license-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .main-wrapper {
+      grid-template-columns: 1fr;
+      padding: 0 6%;
+      gap: 0;
+    }
+    .sidebar {
+      position: static;
+      height: auto;
+      padding: 40px 0 20px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .sidebar ol { columns: 2; column-gap: 32px; }
+    .sidebar ol li { break-inside: avoid; }
+    .hero { padding: 60px 6% 40px; }
+    .content { padding: 40px 0 80px; }
+  }
+
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .sidebar ol { columns: 1; }
+    .hero-meta { gap: 20px; }
+    .template, .cheatsheet { padding: 20px; }
+    .field { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .field-label { min-width: auto; }
+    .field-line { width: 100%; }
+  }
+
+  /* Print */
+  @media print {
+    .sidebar { display: none; }
+    .main-wrapper { grid-template-columns: 1fr; }
+    body::before { display: none; }
+    a { color: var(--ink); text-decoration: underline; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eyebrow">Open-Source Toolkit · 2026 Edition</div>
+  <h1>Advocacy Toolkit for <em>Mental Health Professionals</em></h1>
+  <p class="hero-lede">A practical, open-source reference for mental health professionals, policy leaders, counseling educators, clinical supervisors, and provider advocates working to shape legislation and system-level change.</p>
+  <div class="hero-meta">
+    <div>
+      <strong>For</strong>
+      <span>Clinicians, Educators, Advocates, Stakeholders</span>
+    </div>
+    <div>
+      <strong>Scope</strong>
+      <span>Federal &amp; State Advocacy</span>
+    </div>
+    <div>
+      <strong>Format</strong>
+      <span>Open-source · free to share</span>
+    </div>
+  </div>
+</header>
+
+<div class="main-wrapper">
+
+  <!-- SIDEBAR NAV -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Contents</div>
+    <nav>
+      <ol>
+        <li><a href="#communicating">Tips for Communicating with Legislators</a></li>
+        <li><a href="#federal">Resources for Federal Legislation</a></li>
+        <li><a href="#state">Finding State-Based Legislation, Districts &amp; Representatives</a></li>
+        <li><a href="#bill">How a Bill Becomes a Law</a></li>
+        <li><a href="#cheatsheet">My Districts &amp; Representatives Cheat-Sheet</a></li>
+        <li><a href="#templates">Letter Templates &amp; Scripts</a></li>
+        <li><a href="#news">News Sources</a></li>
+        <li><a href="#press">Press Contacts</a></li>
+        <li><a href="#stakeholders">Stakeholders for Press &amp; Partnerships</a></li>
+        <li><a href="#organizations">Advocacy Groups &amp; Organizations</a></li>
+        <li><a href="#data">Data Sources</a></li>
+        <li><a href="#other">Other Resources, Trainings &amp; Tools</a></li>
+      </ol>
+    </nav>
+  </aside>
+
+  <!-- CONTENT -->
+  <main class="content">
+
+    <!-- 1. COMMUNICATING -->
+    <section id="communicating">
+      <span class="section-number">01</span>
+      <h2>Tips to Effectively Communicate with Legislators</h2>
+
+      <p><strong>Identify your legislator.</strong> Before you communicate with a legislator, you need to know who they are. Use online resources to find your representative or senator based on your address, or call the state capitol for their contact information. Review the legislator's bio on their website, any latest news about legislative actions they're involved in, and find out if you have anything in common that you can share during your meeting.</p>
+
+      <p><strong>Be clear and concise.</strong> State your position on the issue and provide any relevant information or evidence to support it. Be respectful and avoid inflammatory or derogatory language. Your time is short. Be prepared for a meeting that can be as short as 2–3 minutes or as long as 15–30 minutes.</p>
+
+      <div class="tip">
+        <span class="tip-label">Tip</span>
+        Make the issue about the legislator's constituents, not yourself. This demonstrates the impact your advocacy will make on the voters.
+      </div>
+
+      <p><strong>Choose the right method.</strong> Legislators can be contacted through phone calls, letters, emails, and social media. In-person meetings, phone calls, and emails/letters are generally considered the most effective methods of communication.</p>
+
+      <p><strong>Be persistent.</strong> Don't be discouraged if you don't receive a response right away. Legislators receive a lot of correspondence, so your message may get lost in the shuffle. Follow up with a phone call or email to make sure your message was received.</p>
+
+      <p><strong>Work with others.</strong> If you're part of a group that shares your concerns, consider working together to communicate with the legislator. A group can have more impact than an individual, and it shows the legislator there is a significant level of support for a particular issue.</p>
+
+      <p><strong>Thank the legislator.</strong> Whether or not the legislator agrees with your position, thank them for their time and consideration. Showing gratitude fosters a positive relationship and makes it more likely the legislator will consider your position in the future.</p>
+
+      <p><strong>Show the Legislator How They Will Benefit from Supporting the Issue:</strong></p>
+      <ul>
+        <li>Better conditions for constituents</li>
+        <li>More opportunity in the district</li>
+        <li>Saving or earning money</li>
+        <li>Stronger community outcomes</li>
+        <li>Bringing money into the community</li>
+        <li>Businesses booming and coming to the community</li>
+        <li>More resources flowing to the community</li>
+        <li>Improved infrastructure</li>
+      </ul>
+
+      <p><strong>Make a Call to Action:</strong> When thanking the legislator as you close out, clearly call for action regarding exactly what he or she needs to do.</p>
+      <ul>
+        <li>Tell them how to do it.</li>
+        <li>Leave a document with these steps for them to keep after the meeting or with the letter.</li>
+      </ul>
+
+      <p><strong>Meeting with Legislators — Do's &amp; Don'ts:</strong> <a href="https://mhanys.org/wp-content/uploads/2025/01/Dos-and-Donts-blue-headers.pdf" target="_blank" rel="noopener">Mental Health Association of NYS — Do's and Don'ts Guide</a></p>
+
+      <h3>FAQs</h3>
+
+      <p class="faq-question">What about contacting a representative as a non-constituent?</p>
+      <p>The best first way to connect is to be a constituent, but it is also powerful if you went to school in the region, have family there, friends, etc. Even if you are not a resident in the region of the representative you are contacting, these broader ties can still form a valid connection.</p>
+
+      <p class="faq-question">How do you find how your representatives voted or track upcoming votes?</p>
+      <p>The Majority Leader of the House of Representatives (Steve Scalise) publishes each week the bills being discussed: <a href="https://www.majorityleader.gov/schedule/weekly-schedule.htm" target="_blank" rel="noopener">Weekly Schedule</a>.</p>
+      <p>To see how your member of Congress voted on a bill, visit <a href="https://www.congress.gov/" target="_blank" rel="noopener">Congress.gov</a>, which allows you to look up bills for this Congress and previous Congresses. Congress.gov also provides a list of everything happening in key committees, including upcoming hearings, committee notices, and witness lists.</p>
+      <p>If there's a committee hearing coming up next week on a topic you're interested in, that's a great time to reach out. For example: if it's a Senate health hearing on public health infrastructure and your member sits on the Senate HELP (Health, Education, Labor, and Pensions) Committee, contact them to ask if their boss plans to attend and emphasize why it's important. You can watch committee hearings live via links on each committee's website.</p>
+      <p>Before a committee meeting is the perfect time to reach out if your legislative member is on that committee, because leading up to those meetings, staffers are doing a lot of research and are actively seeking constituent input. Anytime staffers get questions or additional information, it's helpful. If the member doesn't ask a question in the hearing, constituents can submit questions for the record, and the department must provide a public written response.</p>
+
+      <p class="faq-question">How do we get through to cabinet members? Is a letter with a personal story worth sending?</p>
+      <p>Yes. While you may not see immediate change, providing information to the administration, whether to staff, secretaries, through letters, or meetings, all of it is helpful. You can also copy appropriate leaders in the House and Senate on the Committees of jurisdiction so they have awareness as well.</p>
+      <p>No single action makes the difference. It's the collaborative, built-up effort over time that educates people and moves the needle. You may not get a response directly from a cabinet member, but a member of Congress often can. Contact your Congress member and ask them to voice a question or raise a concern to the specific cabinet member, and ask for the issue to be raised the next time the representative meets with the cabinet member. Consider where you have relationships with heads of academic medical centers or schools; they often have direct relationships with policy-level lawmakers.</p>
+    </section>
+
+    
+
+    <!-- 2. FEDERAL -->
+    <section id="federal">
+      <span class="section-number">02</span>
+      <h2>Resources for Federal Legislation</h2>
+
+      <div class="resource">
+        <span class="resource-name">Legislative Process Videos</span>
+        <p class="resource-desc">Video resources on committee consideration and the legislative process.</p>
+        <a href="https://www.congress.gov/legislative-process/committee-consideration" target="_blank" rel="noopener">congress.gov/legislative-process/committee-consideration</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Find How Legislators Voted on Specific Issues and Bills</span>
+        <p class="resource-desc">Search bills, track status, and review voting records.</p>
+        <a href="https://www.congress.gov/" target="_blank" rel="noopener">congress.gov</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">About Committees of the U.S. Congress and Committee Materials</span>
+        <a href="https://www.congress.gov/help/committee-materials#committee-profiles" target="_blank" rel="noopener">congress.gov/help/committee-materials</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Committees of the U.S. Congress</span>
+        <a href="https://www.congress.gov/committees" target="_blank" rel="noopener">congress.gov/committees</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Upcoming Committee Hearing Meetings</span>
+        <a href="https://www.congress.gov/search?q=%7B%22congress%22%3A119%2C%22source%22%3A%22committee-meetings%22%7D" target="_blank" rel="noopener">congress.gov — Committee Meetings Search</a>
+      </div>
+    </section>
+
+    
+
+    <!-- 3. STATE -->
+    <section id="state">
+      <span class="section-number">03</span>
+      <h2>Finding State-Based Legislation, Districts, and Representatives</h2>
+
+      <div class="resource">
+        <span class="resource-name">State Legislature Websites</span>
+        <p class="resource-desc">Direct links to all 50 state legislature websites.</p>
+        <a href="https://www.congress.gov/state-legislature-websites" target="_blank" rel="noopener">congress.gov/state-legislature-websites</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Find Legislation in Your State</span>
+        <p class="resource-desc">Stay informed on mental health legislation, contact an elected official, and check what's going on in your area.</p>
+        <a href="https://publicpolicy.vibrant.org/legislation-and-regulation/" target="_blank" rel="noopener">publicpolicy.vibrant.org/legislation-and-regulation</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NAMI State Fact Sheets</span>
+        <p class="resource-desc">Many important mental health policy decisions happen at the state level. Policymakers want to know how mental illness impacts their constituents. Download state-specific mental health statistics (as of 2025) to share with decision makers.</p>
+        <a href="https://www.nami.org/advocacy-at-nami/state-fact-sheets/" target="_blank" rel="noopener">nami.org/advocacy-at-nami/state-fact-sheets</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Track Legislation by State — LegiScan</span>
+        <p class="resource-desc">A database that provides education and resources to learn about state governing processes.</p>
+        <a href="https://legiscan.com/gaits" target="_blank" rel="noopener">legiscan.com/gaits</a><br>
+        <a href="https://legiscan.com/legislation-101" target="_blank" rel="noopener">legiscan.com/legislation-101</a>
+      </div>
+    </section>
+
+    
+
+    <!-- 4. HOW A BILL BECOMES A LAW -->
+    <section id="bill">
+      <span class="section-number">04</span>
+      <h2>How a Bill Becomes a Law</h2>
+      <p><em>In New York State — but likely similar in yours.</em></p>
+
+      <p>Once an idea for a new law has been selected, it must be drafted as a bill before it can be considered by the Senate.</p>
+
+      <ul>
+        <li><strong><u>A bill</u></strong> is a set of instructions for changing the language of the laws of New York.</li>
+        <li><em>Bill drafting:</em> is carried out by the staff of <strong>New York State's Legislative Bill Drafting Commission.</strong></li>
+      </ul>
+
+      <p>If a majority of the <strong>Senators approves, the bill is sent to the Assembly.</strong></p>
+
+      <ul>
+        <li>The Assembly then <strong>refers the bill to a committee for discussion.</strong></li>
+        <li>If approved in committee, it goes to the full membership for a vote.</li>
+        <li>If the bill is approved in the Assembly without amendment, it is delivered to the Governor.
+          <ul>
+            <li>However, if it is changed, it is returned to the Senate and updated to a new version eligible for action.</li>
+          </ul>
+        </li>
+        <li>The reverse procedure is followed if the Assembly first passes a bill identical to a Senate measure or if the Senate amends an Assembly bill.</li>
+      </ul>
+
+      <div class="tip">
+        <span class="tip-label">Tip</span>
+        June through January is the best time to meet with legislators during "off season" when they are not in Albany and are on their home turf.
+      </div>
+    </section>
+
+    
+
+    <!-- 5. CHEAT SHEET -->
+    <section id="cheatsheet">
+      <span class="section-number">05</span>
+      <h2>My Districts &amp; Representatives Fillable Cheat-Sheet</h2>
+
+      <p><strong>Step 1:</strong> Find your district information and representatives on your state's board of elections website or go to <a href="https://www.nass.org/can-I-vote/voter-registration-status" target="_blank" rel="noopener">nass.org/can-I-vote/voter-registration-status</a>.</p>
+
+      <p><strong>Step 2:</strong> Fill out each district you belong to and who currently represents you in the list below for quick reference when advocating on future issues.</p>
+
+      <div class="cheatsheet">
+        <div class="cheatsheet-group">
+          <h5>District Information</h5>
+          <div class="field"><span class="field-label">Election District</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Judicial District</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Congressional District</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Senatorial District</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Council District</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Municipal Court District</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Assembly District</span><span class="field-line"></span></div>
+        </div>
+
+        <div class="cheatsheet-group">
+          <h5>Senator</h5>
+          <div class="field"><span class="field-label">Name</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Website</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Email</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Phone</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Committees &amp; Titles</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Senate Bill # to Track</span><span class="field-line"></span></div>
+          <p style="margin-top:10px; font-size:14px;">Track status: e.g., <a href="https://www.nysenate.gov/legislation" target="_blank" rel="noopener">nysenate.gov/legislation</a></p>
+        </div>
+
+        <div class="cheatsheet-group">
+          <h5>Assemblyperson</h5>
+          <div class="field"><span class="field-label">Name</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Website</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Email</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Phone</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Committees &amp; Titles</span><span class="field-line"></span></div>
+          <div class="field"><span class="field-label">Assembly Bill # to Track</span><span class="field-line"></span></div>
+          <p style="margin-top:10px; font-size:14px;">Track status: e.g., <a href="https://nyassembly.gov/" target="_blank" rel="noopener">nyassembly.gov</a></p>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- 6. TEMPLATES -->
+    <section id="templates">
+      <span class="section-number">06</span>
+      <h2>Letter Templates, Email &amp; Phone Scripts</h2>
+
+      <h3>General Letter / Email to a Legislator</h3>
+      <div class="template">
+        <p>Dear <span class="placeholder">[Legislator's Name]</span>,</p>
+        <p>I am writing to express my concern about <span class="placeholder">[insert the issue you're concerned with]</span>. As a constituent of <span class="placeholder">[insert your city or state]</span>, I believe that it is important for our elected officials to take action to address this issue.</p>
+        <p><span class="placeholder">[Provide some background information about the issue. Include facts, statistics, or personal experiences that support your position.]</span></p>
+        <p>I believe that this issue requires immediate attention from our legislature. I urge you to take action by <span class="placeholder">[insert action you want the legislature to take]</span>.</p>
+        <p>Thank you for your attention to this matter. I look forward to hearing from you soon.</p>
+        <p>Sincerely,<br>
+        <span class="placeholder">[Your Name]</span><br>
+        <span class="placeholder">[Mailing Address]</span><br>
+        <span class="placeholder">[Phone Number]</span><br>
+        <span class="placeholder">[Email Address]</span></p>
+      </div>
+
+      <p><strong>More templates for communicating with legislators:</strong> Vibrant Emotional Health's Advocacy Toolkit contains templates for writing an email or letter to a legislator, scheduling and organizing an in-person meeting, meeting preparation and follow-up, and providing testimony at a legislative hearing: <a href="https://publicpolicy.vibrant.org/wp-content/uploads/2025/12/Vibrant-Policy-Engagement-Toolkit-2025-1.pdf" target="_blank" rel="noopener">Vibrant Policy Engagement Toolkit (PDF)</a>.</p>
+
+      <h3>Post-Meeting Email to a Legislative Aide</h3>
+      <div class="template">
+        <p>Hello <span class="placeholder">[Name of Legislative Aide/Staff]</span>,</p>
+        <p>You gave me your card during a brief meeting outside the Assembly chamber on <span class="placeholder">[Date]</span>.</p>
+        <p>Thank you for taking the time to talk about the <span class="placeholder">[Bill/Issue/Central Focus of Meeting]</span> and for listening to my request(s) for <span class="placeholder">[Legislator Name]</span> to <span class="placeholder">[Actions/Requests for Legislator to Agree To]</span>.</p>
+        <p>I am forwarding the email with more information on the details of the <span class="placeholder">[Bill/Issue]</span> that I sent to <span class="placeholder">[Legislator Name]</span> the day prior to our scheduled meeting for your reference.</p>
+        <p>Please let me know if there is anything further I can do to contribute. It was a pleasure speaking with you.</p>
+        <p><span class="placeholder">[Sign off]</span>,<br><span class="placeholder">[Signature and Contact Info]</span></p>
+      </div>
+
+      <h3>Email to Bill Sponsor — Gauge Interest and Offer Help</h3>
+      <div class="template">
+        <p>Dear <span class="placeholder">[Legislator Name]</span>,</p>
+        <p>I am writing to you because you are the sponsor of the <span class="placeholder">[Bill/Issue — embed link to the bill or issue if available]</span>, which would <span class="placeholder">[Benefits/Reasons that drive legislator's buy-in]</span>.</p>
+        <p>What is your level of interest in moving this bill forward and do you have a plan to prioritize this bill?</p>
+        <p>I would also like to offer any help I can provide in garnering more support for senators to co-sponsor this bill. I would be willing to meet with you virtually or schedule a phone call to further discuss how I could help if you would like.</p>
+        <p>Thank you for your time and attention, and thank you for sponsoring this much-needed bill. I truly believe that passing this bill would increase the number of qualified supervisors in the behavioral healthcare workforce, and could help improve access to mental health care as well as retain professionals in the behavioral healthcare workforce.</p>
+        <p><span class="placeholder">[Sign off]</span>,<br><span class="placeholder">[Signature and Contact Info]</span></p>
+      </div>
+
+      <h3>Phone Script — Scheduling a Meeting with a Legislator</h3>
+      <div class="template">
+        <p><em>Say:</em> "Hey, I am calling today to talk about <span class="placeholder">[HR945 — a bill that focuses on Medicare reimbursement]</span>. I would love to meet with the congressman about this. Oh, by the way, can you tell me where he stands today and if he's aware of this, because I noticed he wasn't a sponsor."</p>
+      </div>
+
+      <h3>Phone Script — Raising Awareness of an Unresolved Issue</h3>
+      <div class="template">
+        <p><em>Explain to the operator:</em> "I am a constituent and I am having a problem with <span class="placeholder">[X]</span>, and I wanted to speak with someone about it."</p>
+        <p>Have the details ready and concise:</p>
+        <ul>
+          <li>What's the problem</li>
+          <li>Who you have communicated with</li>
+          <li>How long you have been trying to get it resolved</li>
+          <li>What the consequences have been for you</li>
+        </ul>
+        <p>Ask them what to do to resolve it.</p>
+      </div>
+    </section>
+
+    
+
+    <!-- 7. NEWS -->
+    <section id="news">
+      <span class="section-number">07</span>
+      <h2>News Sources</h2>
+
+      <div class="resource">
+        <span class="resource-name">Health Care Un-covered</span>
+        <p class="resource-desc">a newsletter to call attention to out-of-control profiteering in U.S. health care and what that means to everyday Americans. And, importantly, to identify potential solutions.</p>
+        <a href="https://healthcareuncovered.substack.com/" target="_blank" rel="noopener">healthcareuncovered.substack.com</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">The Insurance Maze by Barbara Griswold, MFT</span>
+        <p class="resource-desc">Barbara's website is chalk-full of resources for therapists related to insurance and good documentation. Her newsletter provides guidance on changing federal and state laws related to compliance with insurance and reporting regulations.</p>
+        <a href="http://www.theinsurancemaze.com" target="_blank" rel="noopener">theinsurancemaze.com</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">National Association of Insurance Commissioners (NAIC) Newsroom</span>
+        <p class="resource-desc">The latest news and consumer articles.</p>
+        <a href="https://content.naic.org/newsroom" target="_blank" rel="noopener">content.naic.org/newsroom</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Highly Therapized</span>
+        <p class="resource-desc">Highly Therapized aims to provide an in-depth exploration of mental health topics, unpacking them one layer at a time for curious minds alike. Discussions of mental health topics using current trends, evidence-based research, and personal experiences.</p>
+        <a href="https://www.highlytherapized.com/" target="_blank" rel="noopener">highlytherapized.com</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">PsychBilling Coach - Susan Frager</span>
+        <p class="resource-desc">Stay up to date with the latest insights on psychology and mental health billing from Susan Frager, your PsychBilling Coach. Explore our expert newsletters for tips on insurance claims, revenue management, and practice efficiency.</p>
+        <a href="https://psychbillingcoach.com/newsletters/" target="_blank" rel="noopener">psychbillingcoach.com/newsletters</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Kaiser Family Foundation's Policy News on Mental Health</span>
+        <p class="resource-desc">Kaiser Family Foundation's policy news on mental health.</p>
+        <a href="https://kffhealthnews.org/topics/mental-health/" target="_blank" rel="noopener">kffhealthnews.org/topics/mental-health</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">STAT News on Mental Health</span>
+        <p class="resource-desc">Here you'll find the latest in mental health research related to postpartum depression and major depressive disorder, schizophrenia, bipolar disorder and more. Stories here tackle issues related to psychologists, psychiatrists — and patients.</p>
+        <a href="https://www.statnews.com/topic/mental-health/" target="_blank" rel="noopener">statnews.com/topic/mental-health</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Private Equity Stakeholder Project</span>
+        <p class="resource-desc">The latest news and blog posts on private equity, uplifting the voices of people directly impacted by private equity firms.</p>
+        <a href="https://pestakeholder.org/" target="_blank" rel="noopener">pestakeholder.org</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Human in the Loop Substack by Mary Feamster</span>
+        <p class="resource-desc">Mary is a therapist with over 15 years of experience in mental health therapy, prevention, crisis intervention, training, and education. She writes about AI, Mental Health, and the humans navigating both.</p>
+        <a href="https://stayhumanintheloop.substack.com/" target="_blank" rel="noopener">stayhumanintheloop.substack.com</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Parapraxis Magazine</span>
+        <p class="resource-desc">By investigating social, political, and personal issues—in relation to violence and conflict, gender and sexuality, racism and diasporic experience, care and welfare—Parapraxis is a psychoanalytically oriented supplement to the existing venues of radical critique and historical materialism.</p>
+        <a href="https://www.parapraxismagazine.com/articles" target="_blank" rel="noopener">parapraxismagazine.com/articles</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Policy, Advocacy, and Research in Counseling Center (PARC)'s Blog</span>
+        <p class="resource-desc">Our blog provides non-partisan and factual information on relevant and current topics, aiming to educate both counselors and the public on policy and legislative issues. The blog's purpose is to promote awareness, understanding, and informed engagement on key issues impacting the counseling profession and the communities we serve.</p>
+        <a href="https://www.votervoice.net/NBCCGrassroots/Blog" target="_blank" rel="noopener">votervoice.net/NBCCGrassroots/Blog</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">The American Psychoanalyst (TAP)</span>
+        <p class="resource-desc">TAP is a digital and print publication offering a psychoanalytic perspective on the modern world through contemporary writing on clinical practice, culture, politics, and everyday psychic life.</p>
+        <a href="https://tapmagazine.org/" target="_blank" rel="noopener">tapmagazine.org</a>
+      </div>
+
+      <h3>Articles</h3>
+
+      <div class="resource">
+        <span class="resource-name">Corporations in the Consulting Room</span>
+        <a href="https://tapmagazine.org/all-articles/corporations-in-the-consulting-room" target="_blank" rel="noopener">tapmagazine.org/all-articles/corporations-in-the-consulting-room</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">ProPublica: "Why I Left The Network"</span>
+        <p class="resource-desc">Reporters spoke to hundreds of mental health providers in nearly all 50 states, from rural communities to big cities, in order to understand the forces that drive therapists from insurance networks.</p>
+        <a href="https://projects.propublica.org/why-i-left-the-network/" target="_blank" rel="noopener">projects.propublica.org/why-i-left-the-network</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">PsiAN: New Research Reveals Therapists' Concerns about Corporate Practice Management Companies</span>
+        <p class="resource-desc">A comprehensive new study by Psychotherapy Action Network (PsiAN) reveals significant concerns among mental health professionals about for-profit practice management companies (PMCs) like Headway, Alma, and Grow Therapy. The research, based on 667 therapist responses, exposes a troubling gap between these companies' marketing promises and the reality of their business practices.</p>
+        <a href="https://www.psian.org/practice-management-companies" target="_blank" rel="noopener">psian.org/practice-management-companies</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Off Balance: National Institute of Mental Health Funding Priorities in 2012 and 2020</span>
+        <a href="https://drive.google.com/file/d/10ccxY3SS8-2BYibd_nBoeePpi7UAurcr/view" target="_blank" rel="noopener">Off Balance (PDF)</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Article (2025) How Much Is the National Institute of Mental Health Spending on Studying Psychotherapy?</span>
+        <p class="resource-desc">Researchers found that NIMH spends the least amount of funding on researching psychotherapy; of the 4% that goes toward researching psychotherapy, the vast majority is directed toward cognitive-behavioral and behavioral models, leaving therapies of depth, insight, and relationship with "virtually nothing" in federal support. This imbalance persists despite significant evidence that depth therapies are highly effective and uniquely capable of providing long-lasting improvement. This matters to psychotherapists and the public alike because the systematic underfunding of relevant research threatens to stall the development of person-centered treatments designed to help people who are suffering.</p>
+        <a href="https://drive.google.com/file/d/1s8fL1DajDvxH7OoyPlN8uRqBddXjob1m/view" target="_blank" rel="noopener">Read the article (PDF)</a>
+      </div>
+
+      <div class="tip">
+        <span class="tip-label">What You Can Do</span>
+        Contact your elected representatives, send them these articles, and ask that they get these topics on the NIMH agenda. Share these articles with colleagues and on social media. Help spread the word about the realities of research spending. This data can be used to demand a rebalancing of funding and research priorities that consider the whole human being, rather than just biological and neurological parts, that incorporate lived experiences and relational dynamics, and that prioritize real-world benefits.
+      </div>
+    </section>
+
+    
+
+    <!-- 8. PRESS -->
+    <section id="press">
+      <span class="section-number">08</span>
+      <h2>Press Contacts</h2>
+
+      <div class="resource">
+        <span class="resource-name">Share your health care story: The Center for Health &amp; Democracy</span>
+        <p class="resource-desc">The Center for Health &amp; Democracy wants to hear about your experience with the health care system. Please fill out this form to tell us about your experience. Feel free to share whatever you are comfortable with. Our team will reach out if we have questions about your submission.</p>
+        <a href="https://win.newmode.net/centerforhealthanddemocracy/tellusyourhealthcarestory" target="_blank" rel="noopener">Tell Us Your Health Care Story</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Health Beat</span>
+        <p class="resource-desc">Reporting guided by what readers share. Tell Health Beat how the public health system is working for you. Where is it failing? What solutions do you see? Whose voices are being left out of the conversation?</p>
+        <a href="mailto:contact@healthbeat.org">contact@healthbeat.org</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Share Your Story with Build Better Health</span>
+        <p class="resource-desc">Has your health insurance let you down when you needed it most? Do you have ideas on how to improve insurance offerings? Tell them about it.</p>
+        <a href="https://www.buildbetterhealth.org/sharedstories" target="_blank" rel="noopener">buildbetterhealth.org/sharedstories</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Charlie Ornstein — ProPublica</span>
+        <p class="resource-desc">Reporter covering health care.</p>
+        <a href="mailto:charles.ornstein@propublica.org">charles.ornstein@propublica.org</a> · @charlesornstein
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Jeanne Pinder — ClearHealthCosts</span>
+        <p class="resource-desc">Journalism project focused on health care pricing transparency.</p>
+        <a href="https://clearhealthcosts.com/" target="_blank" rel="noopener">clearhealthcosts.com</a><br>
+        Tel: 914.552.9876 · Fax: 914.214.1254 · <a href="mailto:info@clearhealthcosts.com">info@clearhealthcosts.com</a>
+      </div>
+    </section>
+
+    
+
+    <!-- 9. STAKEHOLDERS -->
+    <section id="stakeholders">
+      <span class="section-number">09</span>
+      <h2>Stakeholders for Press &amp; Partnerships</h2>
+
+      <div class="resource">
+        <span class="resource-name">The Center for Health and Democracy</span>
+        <p class="resource-desc">Advocates for meaningful, nonpartisan, patient-focused health care reform at the federal and state levels and in the marketplace. The website offers policy recommendations and recorded and transcribed testimony that can provide useful language and key statistics for others advocating to lawmakers about similar issues.</p>
+        <a href="https://www.centerforhealthanddemocracy.org/contact" target="_blank" rel="noopener">centerforhealthanddemocracy.org/contact</a>
+
+        <div style="margin-top: 28px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Wendell Potter, President</strong></p>
+          <p class="resource-desc">A leading advocate for health care reform in both the political arena and the marketplace. A former VP at Cigna turned self-described whistleblower and reformed insurance propagandist. Potter regularly testifies before Senate and House committees, pulling back the curtain on industry business practices that result in higher health care costs and a growing number of uninsured and underinsured Americans. He is also editor-in-chief of Health Care Un-covered.</p>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Spencer Carnes, Advisor</strong></p>
+          <p class="resource-desc"><a href="mailto:advocacy@centerforhealthanddemocracy.org">advocacy@centerforhealthanddemocracy.org</a></p>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Sign Up Now to Learn More and Get Involved</strong></p>
+          <p class="resource-desc">The Center for Health &amp; Democracy is seeking to connect with grassroots activists at the local, state, and national level.</p>
+          <a href="https://actionnetwork.org/forms/chd-sunlight?source=web_button" target="_blank" rel="noopener">Join the Sunlight Network</a>
+        </div>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Action for Progress Coalition</span>
+        <p class="resource-desc">Harnesses stakeholders to force policy change through direct lobbying of state and federal policymakers for system transformation and sustainability. Joining the campaign offers opportunities to collaborate with national thought leaders, influence infrastructure development and payment reforms, access shared knowledge, research, and tools, and be at the forefront of shaping policies that impact mental health care.</p>
+        <a href="https://action4progress.org/join-us/" target="_blank" rel="noopener">action4progress.org/join-us</a> · <a href="mailto:Action4progress@healthsperien.com">Action4progress@healthsperien.com</a>
+      </div>
+    </section>
+
+    
+
+    <!-- 10. ORGANIZATIONS -->
+    <section id="organizations">
+      <span class="section-number">10</span>
+      <h2>Advocacy Groups &amp; Organizations</h2>
+
+      <div class="resource">
+        <span class="resource-name">APA Office of Health Policy and Health Care Financing</span>
+        <p class="resource-desc">Leads clinical and operational advancements of the profession to increase viability and impact of psychology practice. Work includes leading strategy and advocacy regarding financing of psychology practice in the U.S., and increasing the influence, visibility, and value of psychology within the health care system.</p>
+        <a href="https://www.apa.org/practice/payment-policy-integration-health-care" target="_blank" rel="noopener">apa.org/practice/payment-policy-integration-health-care</a> · <a href="mailto:ohcf@apa.org">ohcf@apa.org</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Advocate in Your State with NAMI</span>
+        <p class="resource-desc">The National Alliance on Mental Illness has a strong presence in all 50 states, advocating for state laws, county, and local policies that ensure people with mental health conditions get the help they need. Choose your state to sign-up and get involved with state advocacy.</p>
+        <a href="https://nami.quorum.us/StateAdvocacy/" target="_blank" rel="noopener">nami.quorum.us/StateAdvocacy</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Council on Social Work Education (CSWE)</span>
+        <p class="resource-desc">Advocates for issues important to social work education by interacting with Congress, federal agencies, and other organizations throughout the social work and higher education communities.</p>
+        <a href="https://www.cswe.org/" target="_blank" rel="noopener">cswe.org</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NBCC Grassroots Action Center</span>
+        <p class="resource-desc">The National Board for Certified Counselors grassroots network offers resources, policy updates, news, and campaign initiatives on important issues for the counseling profession, with opportunities to contact legislators and help pass important counselor legislation.</p>
+        <a href="https://www.votervoice.net/NBCCGrassroots/Home" target="_blank" rel="noopener">votervoice.net/NBCCGrassroots/Home</a><br>
+        <a href="https://www.nbcc.org/GovtAffairs/Grassroots#grassroots" target="_blank" rel="noopener">nbcc.org/GovtAffairs/Grassroots</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Advocate with AFSP for Suicide Prevention</span>
+        <p class="resource-desc">Learn how Volunteer Advocates at the American Foundation for Suicide Prevention help the public policy office in Washington, D.C. pass suicide prevention policies at the state and federal levels. For questions about legislative, policy or advocacy related matters, you may email <a href="mailto:advocacy@afsp.org">advocacy@afsp.org</a>.</p>
+        <a href="https://afsp.org/advocate-for-suicide-prevention/" target="_blank" rel="noopener">afsp.org/advocate-for-suicide-prevention</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Kaiser Permanente Mental Health Workforce Accelerator &amp; National Council for Mental Wellbeing</span>
+        <p class="resource-desc">In partnership with the National Council for Mental Wellbeing, Resilient Georgia, Metro State University–Denver, and the Colorado Health Institute, Kaiser launched the Mental Health Workforce Accelerator to expand and diversify the pipeline of therapists. The program provides stipends, job placements, and access to virtual supervision, helping reduce the financial and structural barriers that often derail new graduates.</p>
+        <a href="https://www.thenationalcouncil.org" target="_blank" rel="noopener">thenationalcouncil.org</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">The Therapist Resource Institute (TRI)</span>
+        <p class="resource-desc">A therapist-led membership community built to reduce isolation, increase clarity, and help mental health professionals build sustainable careers.</p>
+        <a href="https://therapistresourceinstitute.com/" target="_blank" rel="noopener">therapistresourceinstitute.com</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">The Therapist Resource Network</span>
+        <p class="resource-desc">Providing emergency financial support, burnout prevention and recovery, and advocacy for mental health clinicians.</p>
+        <a href="https://www.therapistresourcenetwork.org/" target="_blank" rel="noopener">therapistresourcenetwork.org</a>
+      </div>
+    </section>
+
+    
+
+    <!-- 11. DATA -->
+    <section id="data">
+      <span class="section-number">11</span>
+      <h2>Data Sources</h2>
+      <p>For finding statistics, policies, trends, research, and reports to help support your message when advocating for key issues.</p>
+
+      <div class="resource">
+        <span class="resource-name">Peterson Center on Healthcare</span>
+        <p class="resource-desc">Collaborates with diverse stakeholders across the healthcare ecosystem, invests in strategic grantmaking, and supports needed research. Its work strengthens America's health data infrastructure and fosters innovative solutions that reduce costs and make care more affordable, efficient, and effective.</p>
+        <a href="https://petersonhealthcare.org/our-work/" target="_blank" rel="noopener">petersonhealthcare.org/our-work</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">KFF — Kaiser Family Foundation</span>
+        <p class="resource-desc">An independent source for health policy research, polling, and news.</p>
+        <a href="https://www.kff.org/topic/mental-health/" target="_blank" rel="noopener">kff.org/topic/mental-health</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Research Translation Platform</span>
+        <p class="resource-desc">The scientific home for the study of translating scientific evidence for decision makers across government, industry, and practice. Research is translated for accessibility to policymaker and practice audiences through policy briefs, fact sheets, agency outreach, frame analysis, messaging trials, podcasting, congressional briefings, and testimony.</p>
+        <a href="https://evidence2impact.psu.edu/research-translation-platform/" target="_blank" rel="noopener">evidence2impact.psu.edu/research-translation-platform</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NBCC Legislative Policy Map</span>
+        <p class="resource-desc">The National Board of Certified Counselors created an interactive map to help advocates track legislation adjacent to counseling-specific legislation (for example, licensure compacts for occupational therapy or educational requirements for school psychologists) to help advocates understand the potential trajectory of counseling legislation.</p>
+        <a href="https://nbcc.org/governmentaffairs/legislativepolicymap#legislative-policy-map" target="_blank" rel="noopener">nbcc.org/governmentaffairs/legislativepolicymap</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">National Conference of State Legislatures (NCSL)</span>
+        <p class="resource-desc">Created by state legislators and legislative staff in 1975; serves all 50 states, commonwealths, territories, and D.C. Every state legislator and staffer is a member of the organization and has complete access to the latest in bipartisan policy research, training resources and technical assistance tailored specifically to their needs. NCSL offers members a variety of opportunities to connect and collaborate, notably at its signature event, the NCSL Legislative Summit. Use the link below to get involved or connect with NCSL staff.</p>
+        <a href="https://www.ncsl.org/about-us" target="_blank" rel="noopener">ncsl.org/about-us</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NCSL Health Workforce Legislation Database</span>
+        <p class="resource-desc">Covers topics relating to the health care workforce, including several professions and strategies. Includes all enacted legislation from 2024 to present, updated biweekly.</p>
+        <a href="https://www.ncsl.org/health/health-workforce-legislation-database" target="_blank" rel="noopener">ncsl.org/health/health-workforce-legislation-database</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NCSL State Public Health Legislation Database</span>
+        <p class="resource-desc">Covers topics related to public health including infectious disease prevention and treatment, public health reporting and workforce, and vaccines. Includes all introduced legislation from 2021 to present, updated at least twice per month.</p>
+        <a href="https://www.ncsl.org/health/state-public-health-legislation-database" target="_blank" rel="noopener">ncsl.org/health/state-public-health-legislation-database</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">National Association of Insurance Commissioners (NAIC) Resource Center</span>
+        <p class="resource-desc">Explore recent publications, investment analysis, capital market trends, federal and legislative news, and model laws for insurance regulators and the general public.</p>
+        <a href="https://content.naic.org/resource-center" target="_blank" rel="noopener">content.naic.org/resource-center</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NAIC Center for Insurance Policy &amp; Research</span>
+        <p class="resource-desc">Conducts research, provides data and analysis, and offers education on important insurance issues to drive discussion and advance understanding among policymakers, insurance commissioners, regulators, industry leaders, and advocates. Through this work, the Center drives dialogue and action on today's insurance issues.</p>
+        <a href="https://content.naic.org/research" target="_blank" rel="noopener">content.naic.org/research</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NAIC — Additional Resources</span>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Research Library:</strong> Archives and regulatory resources</p>
+          <a href="https://naic.soutronglobal.net/portal/Public/en-US/Search/AdvancedSearch" target="_blank" rel="noopener">naic.soutronglobal.net/portal/Public/en-US/Search/AdvancedSearch</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Publications:</strong> Exclusive, industry-focused manuals, data, and more.</p>
+          <a href="https://content.naic.org/publications" target="_blank" rel="noopener">content.naic.org/publications</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Government Affairs:</strong> State, federal, and international policy and outreach initiatives.</p>
+          <a href="https://content.naic.org/government-affairs" target="_blank" rel="noopener">content.naic.org/government-affairs</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Capital Markets Bureau:</strong> Developments and trends in financial markets and insurer investments.</p>
+          <a href="https://content.naic.org/capital-markets-bureau" target="_blank" rel="noopener">content.naic.org/capital-markets-bureau</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Model Laws:</strong> Access to every published model law, regulation, and guideline. Included with every model is a state action page that cites each state's enacted model or similar legislation. Many models also include a Project History that explains why the model was adopted and why certain provisions were included.</p>
+          <a href="https://content.naic.org/model-laws" target="_blank" rel="noopener">content.naic.org/model-laws</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>State Insurance Charts:</strong> Issue-specific charts, combining states' statutes and regulations.</p>
+          <a href="https://content.naic.org/model-laws/state-insurance-charts" target="_blank" rel="noopener">content.naic.org/model-laws/state-insurance-charts</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Health Coverage Policy and Regulation:</strong> NAIC frequently develops letters, testimony, and other materials in support of state and federal policymaking on health insurance coverage. Find health-related documents as well as links to additional resources.</p>
+          <a href="https://content.naic.org/healthcare-reform" target="_blank" rel="noopener">content.naic.org/healthcare-reform</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Insurance Topics:</strong> This A-Z listing provides information on a range of insurance regulatory issues. Click on an issue for a brief abstract, support documents, testimony, presentations and NAIC actions. If you have feedback or suggestions for other Key Issues you would like to see here, please send an email to <a href="mailto:ciprnews@naic.org">ciprnews@naic.org</a>.</p>
+          <a href="https://content.naic.org/insurance-topics" target="_blank" rel="noopener">content.naic.org/insurance-topics</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>Glossary:</strong> A glossary of insurance terms and definitions developed by the Research and Actuarial Department staff based on various insurance references. New terms will be added to the glossary over time.</p>
+          <a href="https://content.naic.org/glossary-insurance-terms" target="_blank" rel="noopener">content.naic.org/glossary-insurance-terms</a>
+        </div>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NAMI Public Policy Reports</span>
+        <p class="resource-desc">NAMI publishes reports on critical, emerging issues to help inform the public about the importance of effective mental health policy.</p>
+        <a href="https://www.nami.org/Support-Education/Publications-Reports/Public-Policy-Reports/" target="_blank" rel="noopener">nami.org/Support-Education/Publications-Reports/Public-Policy-Reports</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NAMI Federal Advocacy</span>
+        <p class="resource-desc">NAMI takes a nonpartisan approach to advocate on a wide range of policy issues, including expanding access to health care coverage, advancing research, diverting people from justice system involvement, promoting early intervention, and more. NAMI urges Congress and the Administration to continue their commitment to people with mental health conditions by focusing on four key areas: Protecting Access to Care; Reimagining Crisis Response; Advancing Research; Improving Youth Mental Health.</p>
+        <a href="https://www.nami.org/advocacy/advocate-for-change/namis-federal-advocacy/" target="_blank" rel="noopener">nami.org/advocacy/advocate-for-change/namis-federal-advocacy</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">NAMI State Fact Sheets</span>
+        <p class="resource-desc">Download state-specific mental health statistics (as of 2025) to share with decision makers to help inform policy positions.</p>
+        <a href="https://www.nami.org/advocacy-at-nami/state-fact-sheets/" target="_blank" rel="noopener">nami.org/advocacy-at-nami/state-fact-sheets</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Useful Links on Price and Costs of Healthcare — ClearHealthCosts</span>
+        <a href="https://clearhealthcosts.com/useful-links/" target="_blank" rel="noopener">clearhealthcosts.com/useful-links</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">National Legislative Datasets — LegiScan</span>
+        <p class="resource-desc">Weekly snapshots of all bill, vote, and legislator data for each session, created Sunday mornings with updated information on an as-needed basis.</p>
+        <a href="https://legiscan.com/datasets" target="_blank" rel="noopener">legiscan.com/datasets</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Behavioral Healthcare Workforce Research — NASHP</span>
+        <p class="resource-desc">The National Academy for State Health Policy produces research and state-based strategies to support states in strengthening this vital workforce.</p>
+        <a href="https://nashp.org/policy/health-care-workforce/behavioral-health-workforce/" target="_blank" rel="noopener">nashp.org/policy/health-care-workforce/behavioral-health-workforce</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Tools for Mental Health Progress — The Kennedy Forum</span>
+        <p class="resource-desc">Interactive data, research, and resources to help anyone — providers, nonprofits, policymakers, lawmakers, and advocates — find the solutions they need.</p>
+        <a href="https://www.thekennedyforum.org/tools-for-mental-health-progress/" target="_blank" rel="noopener">thekennedyforum.org/tools-for-mental-health-progress</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Clearinghouse Database — Penn State Evidence2Impact</span>
+        <p class="resource-desc">The Results First Clearinghouse Database provides an easy way to access and understand the evidence base for programs in behavioral health, criminal justice, education, and public health. Users can see if there have been rigorous evaluations of a program and review information on its effectiveness.</p>
+        <a href="https://evidence2impact.psu.edu/results-first-resources/clearing-house-database/" target="_blank" rel="noopener">evidence2impact.psu.edu/results-first-resources/clearing-house-database</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Issue Brief: Building the MHSUD Workforce — The Kennedy Forum</span>
+        <p class="resource-desc">Examines the extent of the Mental Health and Substance Use Disorder Workforce on a national level and provides policy recommendations in payment and reimbursement, licensure and standardization, education and training, and data and technology.</p>
+        <a href="https://www.thekennedyforum.org/resource/building-the-mhsud-workforce-we-need/" target="_blank" rel="noopener">Building the MHSUD Workforce We Need</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">State Health Facts — KFF</span>
+        <p class="resource-desc">Many health indicators broken down by state.</p>
+        <a href="https://www.kff.org/statedata/" target="_blank" rel="noopener">kff.org/statedata</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">AI Reference Guides for Mental Health Clinicians — Mary Feamster</span>
+        <p class="resource-desc">Two free, clinician-focused reference guides for navigating AI tools, EHR platforms, and mental health technology, updated monthly.</p>
+        <ul style="margin-top: 8px;">
+          <li><a href="https://substack.com/home/post/p-189034442" target="_blank" rel="noopener">Overview on Mary's Substack</a></li>
+          <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vQN40g4l9juvXeTKcbaTav1l9lwU-RnmQ8KCpKZemw53GwIgLLwM94p_CaDBHQlmw/pubhtml#gid=1023429941" target="_blank" rel="noopener">Guide #1: EHR &amp; Practice Management Platforms</a> — comprehensive breakdown of EHRs offering AI integrations, looking at data security, ownership, sustainability measures, and other details clinicians need to know before tying their businesses and client data to a platform.</li>
+          <li><a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vReKISYbYghHKLdVP0Yk8AM017zDbKQb3jz2l7PnwsEggvA8ezpkEBsCq_TXBiR8Q/pubhtml#gid=18813010" target="_blank" rel="noopener">Guide #2: AI Chatbots, Mental Health Apps &amp; Startup Platforms</a> — overview of top AI resources being used for mental health and therapy purposes, whether explicitly built to support mental health or simply being accessed that way in practice.</li>
+        </ul>
+      </div>
+    </section>
+
+    
+
+    <!-- 12. OTHER RESOURCES -->
+    <section id="other">
+      <span class="section-number">12</span>
+      <h2>Other Resources, Trainings &amp; Tools</h2>
+
+      <div class="resource">
+        <span class="resource-name">Cover My Mental Health</span>
+        <p class="resource-desc">A not-for-profit resource that supports self-advocacy for insurance coverage by providing education and guidance on dealing with denied health insurance claims and other obstacles to receiving mental health care, for clinicians, patients, and collaborators.</p>
+        <a href="https://covermymentalhealth.org/" target="_blank" rel="noopener">covermymentalhealth.org</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Build Better Health</span>
+        <p class="resource-desc">A nonprofit, provider-led coalition for insurance accountability and cooperative reform. Educates communities and stakeholders about barriers to care, advocates for equitable health system reform, and supports efforts that expand access to quality healthcare. Mental health providers and provider advocates can get involved through the Mental Health Insurance Reform Task Force and member subcommittees, or utilize resources such as Provider Rights, Research, and Parity Law Overview.</p>
+        <a href="https://www.buildbetterhealth.org/" target="_blank" rel="noopener">buildbetterhealth.org</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">The National Council's Center for Workforce Solutions</span>
+        <p class="resource-desc">The National Council for Mental Wellbeing equips organizations with frameworks, shared learning, and collective action through its Center for Workforce Solutions. From the Workforce Solutions Jam to its ECHO series, the Center amplifies workforce innovations and helps health systems adapt them at scale.</p>
+        <a href="https://www.thenationalcouncil.org/program/center-for-workforce-solutions/" target="_blank" rel="noopener">thenationalcouncil.org/program/center-for-workforce-solutions</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Video: Telling an Effective Story to Legislators</span>
+        <p class="resource-desc">The American Counseling Association's Chief Government Affairs and Public Policy Officer Brian D. Banks offers training on effective storytelling to legislators.</p>
+        <a href="https://www.youtube.com/watch?v=_ZSohsEGbdk" target="_blank" rel="noopener">Watch on YouTube</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">CDC Online Policy Trainings for Public Health Professionals &amp; Partners</span>
+        <p class="resource-desc">Online training courses developed for a broad audience, including CDC staff, public health professionals, and those who analyze and inform policy. The goal of these trainings is to increase the learner's understanding of major policy-related concepts and methods, and to improve their capacity in developing and translating science to inform policy decisions.</p>
+        <a href="https://www.cdc.gov/polaris/php/policy-resources-trainings/online-policy-trainings.html" target="_blank" rel="noopener">cdc.gov/polaris/php/policy-resources-trainings/online-policy-trainings</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">CDC Policy Resources &amp; Trainings</span>
+        <p class="resource-desc">Explore practical policy-relevant tools, trainings, and resources for analyzing and evaluating public health policy.</p>
+        <a href="https://www.cdc.gov/polaris/php/policy-resources-trainings/index.html" target="_blank" rel="noopener">cdc.gov/polaris/php/policy-resources-trainings</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Vibrant's Public Policy Action Center</span>
+        <p class="resource-desc">Includes an advocacy toolkit, a tool to find your legislators, public policy information, and templates to help you get started.</p>
+        <a href="https://publicpolicy.vibrant.org/action/" target="_blank" rel="noopener">publicpolicy.vibrant.org/action</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">The Do'ers Toolkit — DoSomething.org</span>
+        <p class="resource-desc">Step-by-step guides, practical resources, advocacy tools, and proven tips to help turn passion into action.</p>
+        <a href="https://dosomething.org/toolkit" target="_blank" rel="noopener">dosomething.org/toolkit</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Insurance Toolkit and Insurance Issue Tracker — Psychotherapy Action Network (PsiAN)</span>
+        <p class="resource-desc">The Psychotherapy Action Network's Insurance Toolkit offers a step-by-step guide to help mental health clinicians work through insurance claim denials or general pushback from insurance companies. The Insurance Issue Tracker documents all sorts of issues that clinicians, admins, and patients have related to working with insurance companies, and PsiAN uses this information to advocate for better policies and systemic change.</p>
+        <a href="https://www.psian.org/insurance" target="_blank" rel="noopener">Insurance Toolkit</a> · <a href="https://www.psian.org/insurance-issue-tracker" target="_blank" rel="noopener">Submit an Insurance Issue</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Analysis of Funding Sources and Investors in Practice Management Companies (PMCs)</span>
+        <p class="resource-desc">As of October 2025, bottom of the webpage.</p>
+        <a href="https://www.psian.org/practice-management-companies" target="_blank" rel="noopener">psian.org/practice-management-companies</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Rx Inspector Tool — ProPublica</span>
+        <p class="resource-desc">ProPublica published unreleased data on origins of generic prescription drugs and developed the Rx Inspector Tool so you can find the factories that made your generic drugs and their FDA Inspection track records. ProPublica is also inviting people to share what you learned about your generic prescription medications.</p>
+        <a href="https://projects.propublica.org/rx-inspector/" target="_blank" rel="noopener">Rx Inspector Tool</a> · <a href="https://airtable.com/appHFx7rFWX7RpEKV/pagLr7CSAR8lvPhQz/form" target="_blank" rel="noopener">Share Your Experience</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">ACA: Insurance Parity Resources</span>
+        <p class="resource-desc">Insurance parity means that insurers cannot put more limits on accessing mental health care than on accessing physical health care, including higher copays or coinsurance, lower visit limits, or different methods for setting reimbursement rates. These are all parity violations. The American Counseling Association provides resources for the ongoing fight for stronger insurance parity protections.</p>
+        <a href="https://www.counseling.org/government-affairs/resources/insurance-parity-resources" target="_blank" rel="noopener">counseling.org/government-affairs/resources/insurance-parity-resources</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Insurance Parity and Appeal Support — The Kennedy Forum</span>
+        <p class="resource-desc">This site is here to provide you with the information and resources you need to exercise your right to equitable insurance coverage.</p>
+        <a href="https://www.parityregistry.org/" target="_blank" rel="noopener">parityregistry.org</a>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>A Step-by-Step Guide to Fighting Back:</strong> information and strategies to resolve disputes with your health plan.</p>
+          <a href="https://www.parityregistry.org/appeal-support/" target="_blank" rel="noopener">parityregistry.org/appeal-support</a>
+        </div>
+
+        <div style="margin-top: 20px; padding-left: 20px; border-left: 2px solid var(--accent);">
+          <p style="margin-bottom: 6px;"><strong>State-Based Resource Finder:</strong> find resources in your state for consumer advocates, health plan contacts, state regulators, federal regulators, or veteran and military resources.</p>
+          <a href="https://www.parityregistry.org/resources/" target="_blank" rel="noopener">parityregistry.org/resources</a>
+        </div>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Health Insurance Appeals Guide — NAMI and The Kennedy Forum</span>
+        <p class="resource-desc">A Consumer Guide for Filing Mental Health and Substance Use Disorder (MH/SUD) Appeals.</p>
+        <a href="https://pjk-wp-uploads.s3.amazonaws.com/www.parityregistry.org/uploads/2021/07/KF-NAMI-Appeals-Guide-April-2021-final-middle-size.pdf" target="_blank" rel="noopener">KF-NAMI Appeals Guide (PDF)</a>
+      </div>
+
+      <div class="resource">
+        <span class="resource-name">Don't Deny Me</span>
+        <p class="resource-desc">Helpful fact sheets and other materials, as well as brochures and posters just for providers who want to help educate patients about parity.</p>
+        <a href="https://dontdenyme.org/" target="_blank" rel="noopener">DontDenyMe.org</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <h3>About This Toolkit</h3>
+  <p>This is an open-source advocacy resource designed for mental health professionals, policy leaders, counseling educators, clinical supervisors, and provider advocates. Share it freely. Adapt it for your state, your organization, your campaign.</p>
+  <p style="margin-top: 20px;">If you find broken links or have resources to add, connect through the Therapist Resource Network: <a href="https://www.therapistresourcenetwork.org/" target="_blank" rel="noopener">therapistresourcenetwork.org</a>.</p>
+  <div class="license-badge">CC BY-SA 4.0 · Free to Share &amp; Adapt</div>
+  <p style="margin-top: 32px; font-size: 12px; opacity: 0.7;">Last updated: April 2026</p>
+</footer>
+
+</div>
+</body>
+</html>
